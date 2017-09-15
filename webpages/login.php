@@ -1,6 +1,6 @@
 <?php
 
-$connection = mysqli_connect("localhost:3306","root","","central_railways_database");
+$connection = mysqli_connect("localhost:3306","root","","central_railways");
 if(!$connection) {	
 	die('Could not connect : ' .msqli_error());
 }
