@@ -24,6 +24,8 @@ p {
 }
 
 
+
+
 #style li a {
     display: block;
     color: white;
@@ -35,9 +37,6 @@ p {
     width:150px;
 }
 
-#style li a:hover:not(.active) {
-    background-color: #111;
-}
 
 #style .dropdown-content {
     display: none;
@@ -65,6 +64,8 @@ p {
 #style li a:hover, .dropdown:hover .dropbtn {
     background-color: red;
 }
+
+
 
 .active {
     background-color: red;
