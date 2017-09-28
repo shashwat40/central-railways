@@ -62,6 +62,7 @@ mysqli_close($connection);
             </ul>
         </div>
 	<br>
+	<br>
         <form method="post" action="kkkosh.php">
             <fieldset>
                 <legend><h2>KKKOSH Details:</h2></legend>
