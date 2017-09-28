@@ -1,5 +1,4 @@
 <?php
-//error_reporting(E_ERROR);
 $connection = mysqli_connect("localhost:3306","root","","central_railways");
 $emp_name = "";
 $desig = "";
@@ -7,9 +6,11 @@ $dept = "";
 $station = "";
 $dob = "";
 $doa = "";
+session_start();
 if(isset($_POST['getdetails'])) {
+    $_SESSION['empno'] = $_POST['empno'];
     $emp_no = $_POST['empno'];
-    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station, dob, doa FROM employee WHERE emp_no = $emp_no");
+    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station, dob, doa FROM employees WHERE emp_no = $emp_no");
     while($row = mysqli_fetch_assoc($result)) {
         $emp_name = $row['emp_name'];
         $desig = $row['desig'];
@@ -19,11 +20,52 @@ if(isset($_POST['getdetails'])) {
         $doa = $row['doa'];
     }
 }
+else if(isset($_POST['submitdetails'])) {
+    $emp_no = $_POST['empno'];
+    $dropdown_array = split('~',$_POST['dropdowndata']);
+    $death_date = $_POST['deathdate'];
+    $mobile_no = $_POST['mobile'];
+    $contact_person_name = $_POST['cpn'];
+    if($dropdown_array[10] == 'Others') {
+        $dropdown_array[10] = $dropdown_array[10] . '(' . $dropdown_array[11] . ')';
+    }
+    else if($dropdown_array[10] == 'Please select') {
+        $dropdown_array[10] = '';
+    }
+    $result = mysqli_query($connection, "INSERT INTO death_details (emp_no, case_of, dod_mu_m, "
+                                        . "wi_name, priority, funeral_adv, mob_no, contact_persn_name, "
+                                        . "sr_top_pg_avl, leave_acc_avl, family_decl_avl, comb_nom_avl, "
+                                        . "settl_sec_dlr_name, bill_sec_dlr_name, cga_clmd_by, cga_clmd_name, "
+                                        . "cga_app_rcvd, cga_app_rcvd_date) VALUES ('$emp_no', "
+                                        . "'$dropdown_array[0]','$death_date' ,'$dropdown_array[1]', "
+                                        . "'$dropdown_array[2]', '$dropdown_array[3]', '$mobile_no', "
+                                        . "'$contact_person_name', '$dropdown_array[4]', '$dropdown_array[5]', "
+                                        . "'$dropdown_array[6]', '$dropdown_array[7]', '$dropdown_array[8]', "
+                                        . "'$dropdown_array[9]', '$dropdown_array[10]', '$dropdown_array[12]', "
+                                        . "'$dropdown_array[13]', '$dropdown_array[14]')");
+    if(!$result) {
+        echo "<script> alert('Sorry! Data not inserted. Try again.'); </script>";
+    }
+    else {
+        echo "<script> alert('Data entered successfully.');</script>";
+        unset($_SESSION['empno']);
+        session_destroy();
+    }
+}
 mysqli_close($connection);
 ?>
 <html>
     <head>
 	<link rel="stylesheet" href="user_dashboard.css">
+        <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
+        <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
+        <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#deathdate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
+                $("#appdate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
+            });
+        </script>
     </head>
     <body>
         <img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
@@ -45,7 +87,7 @@ mysqli_close($connection);
                     <table align="left" border="0">
                         <tr>
                             <td width="165">Employee No. :</td>
-                            <td width="165"><input type="text" name="empno" id="empno"></td>
+                            <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
                         </tr>
                         <tr>
                             <td width="165">Name:</td>
@@ -96,29 +138,38 @@ mysqli_close($connection);
                         <tr>
                             <td width="165">Case of</td>
                             <td width="165">
-                                 <select>
+                                <select id="caseof">
                                     <option value="death">Death</option>
                                     <option value="medical">Medically Unfit</option>
                                     <option value="missing">Missing</option>
                                 </select>
+                                <input type="hidden" id="dropdowndata" name="dropdowndata">
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Date of Death/Medically Unfit/Missing</td>
-                            <td width="165"><input type="text" name="deathdate" id="deathdate"></td>
+                            <td width="165"><input type="date" name="deathdate" id="deathdate"></td>
                         </tr>
                         <tr>
                             <td width="165">Welfare Inspector Name</td>
                             <td width="165">
-                                <select>
-
-                                </select>
+                                <?php
+                                    $connection = mysqli_connect("localhost:3306","root","","central_railways");
+                                    $inspector_list = mysqli_query($connection, "SELECT * FROM welfare_inspector");
+                                    echo '<select id="wi">';
+                                    while($row = mysqli_fetch_array($inspector_list)) {
+                                        echo '<option value="'.$row['name'].'">'.$row['name'].'</option>';
+                                    }
+                                    echo '</select>';
+                                    mysqli_close($connection);
+                                ?>
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Priority </td>
                             <td width="165">
-                                <select>
+                                <select id="priority">
+                                    <option value="default">Please select</option>
                                     <option value="one">I</option>
                                     <option value="two">II</option>
                                     <option value="three">III</option>
@@ -129,9 +180,9 @@ mysqli_close($connection);
                         <tr>
                             <td width="165">Funeral Advance</td>
                             <td width="165">
-                                <select>
+                                <select id="fa">
                                     <option value="required">Required</option>
-                                    <option value="notrequired">Not Required</option>
+                                    <option value="notrequired" selected>Not Required</option>
                                 </select>
                             </td>
                         </tr>
@@ -146,50 +197,184 @@ mysqli_close($connection);
                         <tr>
                             <td width="165">SR top page available</td>
                             <td width="165">
-                                <select>
+                                <select id="sr">
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="no" selected>No</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Leave Account available</td>
                             <td width="165">
-                                <select>
+                                <select id="la">
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="no" selected>No</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Family Declaration available</td>
                             <td width="165">
-                                <select>
+                                <select id="fd">
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="no" selected>No</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Combined Nomination available</td>
                             <td width="165">
-                                <select>
+                                <select id="cn">
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="no" selected>No</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td width="165">Settlement Section Dealer Name</td>
-                            <td width="165"><input type="text" name="ssdn" id="ssdn"></td>
+                            <td width="165">
+                                <?php
+                                    $connection = mysqli_connect('localhost:3306','root','','central_railways');
+                                    $result = mysqli_query($connection, "SELECT emp_name FROM employees WHERE dept = 'PERSONNEL'");
+                                    echo "<select id='settldealer'>";
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                        echo "<option id='".$row['emp_name']."'>".$row['emp_name']."</option>";
+                                    }
+                                    echo "</select>";
+                                    mysqli_close($connection);
+                                ?>
+                            </td>
                         </tr>
                         <tr>
                             <td width="165">Bill Section Dealer Name</td>
-                            <td width="165"><input type="text" name="bsdn" id="bsdn"></td>
+                            <td width="165">
+                                <?php
+                                    $connection = mysqli_connect('localhost:3306','root','','central_railways');
+                                    $result = mysqli_query($connection, "SELECT emp_name FROM employees WHERE dept = 'PERSONNEL'");
+                                    echo "<select id='billdealer'>";
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                        echo "<option id='".$row['emp_name']."'>".$row['emp_name']."</option>";
+                                    }
+                                    echo "</select>";
+                                    mysqli_close($connection);
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="165">CGA claimed by</td>
+                            <td>
+                                <select id="relation" onchange="enableName();">
+                                    <option id="default" selected>Please select</option>
+                                    <option id="wife">Wife/Widow</option>
+                                    <option id="son">Son</option>
+                                    <option id="daughter">Daughter</option>
+                                    <option id="brother">Brother</option>
+                                    <option id="sister">Sister</option>
+                                    <option id="others">Others</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="pleasespecify" hidden>Please specify</td>
+                            <td><input type="text" id="otherrelation" hidden></td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td><input type="text" id="relativename" name="relativename" disabled></td>
+                        </tr>
+                        <tr>
+                            <td>CGA application received</td>
+                            <td>
+                                <select id="cgaapp" onchange="enableDate();">
+                                    <option value="yes">Yes</option>
+                                    <option value="no" selected>No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Application received on</td>
+                            <td><input type="date" id="appdate" name="appdate" disabled></td>
                         </tr>
                     </table>
                 <input type="submit" value="Get Details" name="getdetails">
+                <input type="submit" value="Submit" name="submitdetails" onclick="getDropdownData();">
             </fieldset>
         </form>
+        <script type="text/javascript">
+            function getDropdownData() {
+                var listdata;
+                
+                    listdata = document.getElementById('caseof');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                
+                    listdata = document.getElementById('wi');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                
+                    listdata = document.getElementById('priority');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                
+                    listdata = document.getElementById('fa');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                
+                    listdata = document.getElementById('sr');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+          
+                    listdata = document.getElementById('la');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('fd');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('cn');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('settldealer');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('billdealer');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('relation');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('otherrelation');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
+                    
+                    listdata = document.getElementById('relativename');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
+                    
+                    listdata = document.getElementById('cgaapp');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                    
+                    listdata = document.getElementById('appdate');
+                    document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
+            }
+            function enableName() {
+                var nameData = document.getElementById('relation');
+                if(nameData.options[nameData.selectedIndex].text !== "Please select") {
+                    document.getElementById('relativename').disabled = false;
+                }
+                else {
+                    document.getElementById('relativename').disabled = true;
+                }
+                if(nameData.options[nameData.selectedIndex].text === "Others") {
+                    document.getElementById('pleasespecify').hidden = false;
+                    document.getElementById('otherrelation').hidden = false;
+                }
+                else {
+                    document.getElementById('pleasespecify').hidden = true;
+                    document.getElementById('otherrelation').hidden = true;
+                }
+            }
+            function enableDate() {
+                var cgaAppData = document.getElementById('cgaapp');
+                if(cgaAppData.options[cgaAppData.selectedIndex].text !== "No") {
+                    document.getElementById('appdate').disabled = false;
+                }
+                else {
+                    document.getElementById('appdate').disabled = true;
+                }
+            }
+        </script>
     </body>
 </html>
