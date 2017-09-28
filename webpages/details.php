@@ -81,6 +81,7 @@ mysqli_close($connection);
             </ul>
         </div>
         <br>
+	<br>
         <form method="post" action="details.php">
             <fieldset>
                 <legend><h2>Employee Death Entry:</h2></legend>
