@@ -1,3 +1,3 @@
 # central-railways
-Death register management project for Central Railways, India.
+Welfare Cases Management System for Central Railways, India.
 
