@@ -4,37 +4,14 @@ $emp_name = "";
 $desig = "";
 $dept = "";
 $station = "";
-session_start();
 if(isset($_POST['getdetails'])) {
-    $_SESSION['empno'] = $_POST['empno'];
     $emp_no = $_POST['empno'];
-    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employees WHERE emp_no = $emp_no");
+    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employee WHERE emp_no = $emp_no");
     while($row = mysqli_fetch_assoc($result)) {
         $emp_name = $row['emp_name'];
         $desig = $row['desig'];
         $dept = $row['dept'];
         $station = $row['station'];
-    }
-}
-else if(isset($_POST['submitdetails'])) {
-    $emp_no = $_POST['empno'];
-    $fa_spo_no = $_POST['faspono'];
-    $fa_spo_date = $_POST['faspodate'];
-    $fa_amt = $_POST['faamt'];
-    $dropdown_array = split('~', $_POST['dropdowndata']);
-    $fa_paid_by = $_POST['fapaidby'];
-    $fa_paid_to = $_POST['fapaidto'];
-    $result = mysqli_query($connection, "INSERT INTO funeral_advance (emp_no, fa_spo_no, fa_spo_date, "
-                                        . "fa_amt, fa_paid_stn, fa_paid_by, fa_paid_to, relation) VALUES"
-                                        . " ('$emp_no', '$fa_spo_no', '$fa_spo_date', $fa_amt, '$dropdown_array[0]'"
-                                        . ", '$fa_paid_by', '$fa_paid_to', '$dropdown_array[1]')");
-    if(!$result) {
-        echo "<script> alert('Sorry! Data not inserted. Try again.'); </script>";
-    }
-    else {
-        echo "<script> alert('Data entered successfully.');</script>";
-        unset($_SESSION['empno']);
-        session_destroy();
     }
 }
 mysqli_close($connection);
@@ -43,14 +20,9 @@ mysqli_close($connection);
     <head>
         <title>Indian Railways</title>
             <link rel="stylesheet" href="user_dashboard.css">
-            <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
-            <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
-            <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $("#faspodate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
-                });
-            </script>
+			<link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
+<script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
+<script src="http://localhost/central_railways/bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
 	<img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
@@ -67,15 +39,14 @@ mysqli_close($connection);
 		</ul>
             </div>
 	</div>
-	<br>
-	<br>
+	<br><br>
         <form method="post" action="funeral_advance.php">
             <fieldset>
                 <legend><h2>Funeral Advance:</h2></legend>
                 <table align="left" border="0">
                     <tr>
                         <td width="165">Employee No. :</td>
-                        <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
+                        <td width="165"><input type="text" name="empno" id="empno"></td>
                     </tr>
                     <tr>
                         <td width="165">Name:</td>
@@ -96,6 +67,15 @@ mysqli_close($connection);
                 </table>
                 <table align="center" border="0">
                     <tr>
+                        <td width="165">FA Paid at Station</td>
+                        <td width="165">
+                             <select>
+                                <option value="blank">blank</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td width="165">FA SPO No(6 digit)</td>
                         <td width="165"><input type="text" name="faspono" id="faspono"></td>
                     </tr>
@@ -105,60 +85,28 @@ mysqli_close($connection);
                     </tr>
 
                     <tr>
-                        <td width="165">FA Amount</td>
+                        <td width="165">FA Amt</td>
                         <td width="165"><input type="text" name="faamt" id="faamt"></td>
                     </tr>
                     <tr>
-                        <td width="165">FA Paid At Station</td>
-                        <td width="165">
-                            <?php
-                                $connection = mysqli_connect("localhost:3306","root","","central_railways");
-                                $station_list = mysqli_query($connection, "SELECT full_name FROM station");
-                                echo '<select id="fapaidatstation">';
-                                while($row = mysqli_fetch_array($station_list)) {
-                                    echo '<option value="'.$row['full_name'].'">'.$row['full_name'].'</option>';
-                                }
-                                echo '</select>';
-                                mysqli_close($connection);
-                            ?>
-                        </td>
-                        <input type="hidden" id="dropdowndata" name="dropdowndata">
+                        <td width="165">FA Paid at station</td>
+                        <td width="165"><input type="text" name="fapaidatstation" id="fapaidatstation"></td>
                     </tr>
                     <tr>
                         <td width="165">FA Paid By</td>
                         <td width="165"><input type="text" name="fapaidby" id="fapaidby"></td>
                     </tr>
                     <tr>
-                        <td width="165">FA Paid To</td>
+                        <td width="165">FA Paid to</td>
                         <td width="165"><input type="text" name="fapaidto" id="fapaidto"></td>
                     </tr>
                     <tr>
                         <td width="165">Relation</td>
-                        <td width="165">
-                            <select id="relation">
-                                <option id="default" selected>Please select</option>
-                                <option id="wife">Wife/Widow</option>
-                                <option id="son">Son</option>
-                                <option id="daughter">Daughter</option>
-                                <option id="brother">Brother</option>
-                                <option id="sister">Sister</option>
-                                <option id="others">Others</option>
-                            </select>
-                        </td>
+                        <td width="165"><input type="text" name="relation" id="relation"></td>
                     </tr>
                 </table>
                 <input type="submit" value="Get Details" name="getdetails">
-                <input type="submit" value="Submit" name="submitdetails" onclick="getDropdownData();">
             </fieldset>
         </form>
-        <script type="text/javascript">
-            function getDropdownData() {
-                var listdata;
-                listdata = document.getElementById('fapaidatstation');
-                document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                listdata = document.getElementById('relation');
-                document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-            }
-        </script>
      </body>
 </html>
