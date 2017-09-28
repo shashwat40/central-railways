@@ -66,6 +66,7 @@ mysqli_close($connection);
             </ul>
         </div>
 	<br>
+	<br>
         <form method="post" action="distress_fund.php">
             <fieldset>
                 <legend><h2>Distress Fund:</h2></legend>
