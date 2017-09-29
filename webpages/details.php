@@ -56,6 +56,7 @@ mysqli_close($connection);
 ?>
 <html>
     <head>
+	<title>Indian Railways</title>
         <link rel="stylesheet" href="user_dashboard.css">
 		<link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
 		<script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
