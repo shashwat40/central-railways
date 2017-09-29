@@ -46,6 +46,9 @@ mysqli_close($connection);
 			<link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
 			<script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
 			<script src="http://localhost/central_railways/bootstrap/js/bootstrap.min.js"></script>
+                        <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
+        <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
+        <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
 			<script>
                 $(document).ready(function() {
                     $("#chequedate").datepicker({ dateFormat : 'yy-mm-dd'});
