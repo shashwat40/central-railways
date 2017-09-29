@@ -56,10 +56,10 @@ mysqli_close($connection);
 ?>
 <html>
     <head>
-	<link rel="stylesheet" href="user_dashboard.css">
-        <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
-        <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
-        <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="user_dashboard.css">
+		<link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
+		<script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
+<script src="http://localhost/central_railways/bootstrap/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function() {
                 $("#deathdate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
@@ -80,6 +80,7 @@ mysqli_close($connection);
                     <li><a href="distress_fund.php">Distress Fund</a></li>
             </ul>
         </div>
+        <br>
         <br>
         <form method="post" action="details.php">
             <fieldset>
@@ -303,49 +304,49 @@ mysqli_close($connection);
         <script type="text/javascript">
             function getDropdownData() {
                 var listdata;
-                
+
                     listdata = document.getElementById('caseof');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                
+
                     listdata = document.getElementById('wi');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                
+
                     listdata = document.getElementById('priority');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                
+
                     listdata = document.getElementById('fa');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                
+
                     listdata = document.getElementById('sr');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-          
+
                     listdata = document.getElementById('la');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('fd');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('cn');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('settldealer');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('billdealer');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('relation');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('otherrelation');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
-                    
+
                     listdata = document.getElementById('relativename');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
-                    
+
                     listdata = document.getElementById('cgaapp');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                    
+
                     listdata = document.getElementById('appdate');
                     document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.value + '~';
             }

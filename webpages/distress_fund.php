@@ -43,10 +43,10 @@ mysqli_close($connection);
     <head>
         <title>Indian Railways</title>
             <link rel="stylesheet" href="user_dashboard.css">
-            <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
-            <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
-            <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
-            <script>
+			<link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
+			<script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
+			<script src="http://localhost/central_railways/bootstrap/js/bootstrap.min.js"></script>
+			<script>
                 $(document).ready(function() {
                     $("#chequedate").datepicker({ dateFormat : 'yy-mm-dd'});
                 });
@@ -65,7 +65,7 @@ mysqli_close($connection);
                 <li><a class="active" href="distress_fund.php" id=link>Distress Fund</a></li>
             </ul>
         </div>
-	<br>
+	<br><br>
         <form method="post" action="distress_fund.php">
             <fieldset>
                 <legend><h2>Distress Fund:</h2></legend>
