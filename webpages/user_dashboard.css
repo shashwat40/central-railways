@@ -95,4 +95,8 @@ border: 1px solid black;
 border-top:none;
 padding:30px;}
 
+tr.spaceUnder>td {
+  padding-bottom: 1em;
+}
+
 
