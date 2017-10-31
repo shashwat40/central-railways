@@ -19,7 +19,8 @@
             <ul>
                 <li><a href="cga_details.php" id=link>Details</a></li>
                 <li><a class="active" href="minor_registration.php">Minor Registration</a></li>
-                <li><a href="#">Welfare Inspector</a></li>
+                <li><a href="remarks.php">Remarks</a></li>
+                <li><a href="file_upload.php">File Upload</a></li>
             </ul>
         </div>
         <br>
