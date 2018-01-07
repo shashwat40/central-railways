@@ -71,41 +71,41 @@ mysqli_close($connection);
             <fieldset>
                 <legend><h2>KKKOSH Details:</h2></legend>
                 <table align="left" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Employee No. :</td>
                         <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Name:</td>
                         <td width="165"><input type="text" name="empname" id="empname" value="<?php echo $emp_name; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Designation :</td>
                         <td width="165"><input type="text" name="designation" id="designation" value="<?php echo $desig; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Department :</td>
                         <td width="165"><input type="text" name="department" id="department" value="<?php echo $dept; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Station :</td>
                         <td width="165"><input type="text" name="station" id="station" value="<?php echo $station; ?>" disabled></td>
                     </tr>
                 </table>
                 <table align="center" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">KKKOSH Cheque No:</td>
                         <td width="165"><input type="text" name="kkkoshchequeno" id="kkkoshchequeno"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">KKKOSH Cheque Date :</td>
                         <td width="165"><input type="text" name="chequedate" id="chequedate"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">KKKOSH Amount</td>
                         <td width="165"><input type="text" name="kkkoshamount" id="kkkoshamount"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">KKKOSH Paid By :</td>
                         <td width="165"><input type="text" name="kkkoshpaidby" id="kkkoshpaidby">
                     </tr>

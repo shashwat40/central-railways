@@ -73,49 +73,49 @@ mysqli_close($connection);
             <fieldset>
                 <legend><h2>Distress Fund:</h2></legend>
                 <table align="left" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Employee No. :</td>
                         <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Name:</td>
                         <td width="165"><input type="text" name="empname" id="empname" value="<?php echo $emp_name; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Designation :</td>
                         <td width="165"><input type="text" name="designation" id="designation" value="<?php echo $desig; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Department :</td>
                         <td width="165"><input type="text" name="department" id="department" value="<?php echo $dept; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Station :</td>
                         <td width="165"><input type="text" name="station" id="station" value="<?php echo $station; ?>" disabled></td>
                     </tr>
                 </table>
                 <table align="center" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Distress Fund Cheque No:</td>
                         <td width="165"><input type="text" name="dfchequeno" id="dfchequeno"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Distress Fund Cheque Date :</td>
                         <td width="165"><input type="text" name="chequedate" id="chequedate"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Distress Fund Amount</td>
                         <td width="165"><input type="text" name="dfamount" id="dfamount"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Distress Fund Paid By :</td>
                         <td width="165"><input type="text" name="dfpaidby" id="dfpaidby"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Distress Fund Paid To:</td>
                         <td width="165"><input type="text" name="dfpaidto" id="dfpaidto"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Relation</td>
                         <td width="165">
                             <select id="relation">

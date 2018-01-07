@@ -22,7 +22,7 @@ if(isset($_POST['getdetails'])) {
 }
 else if(isset($_POST['submitdetails'])) {
     $emp_no = $_POST['empno'];
-    $dropdown_array = split('~',$_POST['dropdowndata']);
+    $dropdown_array = explode('~',$_POST['dropdowndata']);
     $death_date = $_POST['deathdate'];
     $mobile_no = $_POST['mobile'];
     $contact_person_name = $_POST['cpn'];
@@ -90,57 +90,57 @@ mysqli_close($connection);
             <fieldset>
                 <legend><h2>Employee Death Entry:</h2></legend>
                     <table align="left" border="0">
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Employee No. :</td>
                             <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Name:</td>
                             <td width="165"><input type="text" name="empname" id="empname" value="<?php echo $emp_name; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Designation :</td>
                             <td width="165"><input type="text" name="designation" id="designation" value="<?php echo $desig; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Department :</td>
                             <td width="165"><input type="text" name="department" id="department" value="<?php echo $dept; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Station :</td>
                             <td width="165"><input type="text" name="station" id="station" value="<?php echo $station; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Date of Birth :</td>
                             <td width="165"><input type="text" name="dob" id="dob" value="<?php echo $dob; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Date of Appointment :</td>
                             <td width="165"><input type="text" name="doa" id="doa" value="<?php echo $doa; ?>" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Last Pay :</td>
                             <td width="165"><input type="text" name="lastpay" id="lastpay" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">7thPC Level :</td>
                             <td width="165"><input type="text" name="7thpc" id="7thpc" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">PRAN :</td>
                             <td width="165"><input type="text" name="pran" id="pran" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">PAN :</td>
                             <td width="165"><input type="text" name="pan" id="pan" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">AADHAR :</td>
                             <td width="165"><input type="text" name="aadhar" id="aadhar" disabled></td>
                         </tr>
                     </table>
                     <table align="center" border="0">
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Case of</td>
                             <td width="165">
                                 <select id="caseof">
@@ -151,11 +151,11 @@ mysqli_close($connection);
                                 <input type="hidden" id="dropdowndata" name="dropdowndata">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Date of Death/Medically Unfit/Missing</td>
                             <td width="165"><input type="date" name="deathdate" id="deathdate"></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Welfare Inspector Name</td>
                             <td width="165">
                                 <?php
@@ -170,7 +170,7 @@ mysqli_close($connection);
                                 ?>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Priority </td>
                             <td width="165">
                                 <select id="priority">
@@ -182,7 +182,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Funeral Advance</td>
                             <td width="165">
                                 <select id="fa">
@@ -191,15 +191,15 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Mobile No</td>
                             <td width="165"><input type="text" name="mobile" id="mobile"></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Contact Person Name</td>
                             <td width="165"><input type="text" name="cpn" id="cpn"></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">SR top page available</td>
                             <td width="165">
                                 <select id="sr">
@@ -208,7 +208,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Leave Account available</td>
                             <td width="165">
                                 <select id="la">
@@ -217,7 +217,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Family Declaration available</td>
                             <td width="165">
                                 <select id="fd">
@@ -226,7 +226,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Combined Nomination available</td>
                             <td width="165">
                                 <select id="cn">
@@ -235,7 +235,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Settlement Section Dealer Name</td>
                             <td width="165">
                                 <?php
@@ -250,7 +250,7 @@ mysqli_close($connection);
                                 ?>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">Bill Section Dealer Name</td>
                             <td width="165">
                                 <?php
@@ -265,7 +265,7 @@ mysqli_close($connection);
                                 ?>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td width="165">CGA claimed by</td>
                             <td>
                                 <select id="relation" onchange="enableName();">
@@ -279,15 +279,15 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td id="pleasespecify" hidden>Please specify</td>
                             <td><input type="text" id="otherrelation" hidden></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td>Name</td>
                             <td><input type="text" id="relativename" name="relativename" disabled></td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td>CGA application received</td>
                             <td>
                                 <select id="cgaapp" onchange="enableDate();">
@@ -296,7 +296,7 @@ mysqli_close($connection);
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="spaceUnder">
                             <td>Application received on</td>
                             <td><input type="date" id="appdate" name="appdate" disabled></td>
                         </tr>

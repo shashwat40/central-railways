@@ -1,6 +1,6 @@
 <?php
-session_start();
 $connection = mysqli_connect("localhost:3306","root","","central_railways");
+session_start();
 if(!$connection) {	
     die('Could not connect : ' .mysqli_error());
 }

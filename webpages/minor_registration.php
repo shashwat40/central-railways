@@ -1,3 +1,17 @@
+<?php
+session_start();
+if(isset($_SESSION['username'])) {
+$connection = mysqli_connect("localhost:3306","root","","central_railways");
+$emp_name = "";
+$desig = "";
+$dept = "";
+$station = "";
+$dob = "";
+$doa = "";
+}
+else 
+    die("Error: Missing user credentials");
+?>
 <html>
     <head>
         <title>Indian Railways</title>
@@ -19,7 +33,8 @@
             <ul>
                 <li><a href="cga_details.php" id=link>Details</a></li>
                 <li><a class="active" href="minor_registration.php">Minor Registration</a></li>
-                <li><a href="#">Welfare Inspector</a></li>
+                <li><a href="remarks.php">Remarks</a></li>
+                <li><a href="file_upload.php">File Upload</a></li>
             </ul>
         </div>
         <br>

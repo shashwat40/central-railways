@@ -21,7 +21,7 @@ else if(isset($_POST['submitdetails'])) {
     $fa_spo_no = $_POST['faspono'];
     $fa_spo_date = $_POST['faspodate'];
     $fa_amt = $_POST['faamt'];
-    $dropdown_array = split('~', $_POST['dropdowndata']);
+    $dropdown_array = explode('~', $_POST['dropdowndata']);
     $fa_paid_by = $_POST['fapaidby'];
     $fa_paid_to = $_POST['fapaidto'];
     $result = mysqli_query($connection, "INSERT INTO funeral_advance (emp_no, fa_spo_no, fa_spo_date, "
@@ -77,42 +77,41 @@ mysqli_close($connection);
             <fieldset>
                 <legend><h2>Funeral Advance:</h2></legend>
                 <table align="left" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Employee No. :</td>
                         <td width="165"><input type="text" name="empno" id="empno" value="<?php echo isset($_SESSION['empno']) ? $_SESSION['empno'] : ''; ?>"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Name:</td>
                         <td width="165"><input type="text" name="empname" id="empname" value="<?php echo $emp_name; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Designation :</td>
                         <td width="165"><input type="text" name="designation" id="designation" value="<?php echo $desig; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Department :</td>
                         <td width="165"><input type="text" name="department" id="department" value="<?php echo $dept; ?>" disabled></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Station :</td>
                         <td width="165"><input type="text" name="station" id="station" value="<?php echo $station; ?>" disabled></td>
                     </tr>
                 </table>
                 <table align="center" border="0">
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA SPO No(6 digit)</td>
                         <td width="165"><input type="text" name="faspono" id="faspono"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA SPO Date:</td>
                         <td width="165"><input type="text" name="faspodate" id="faspodate"></td>
                     </tr>
-
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA Amount</td>
                         <td width="165"><input type="text" name="faamt" id="faamt"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA Paid At Station</td>
                         <td width="165">
                             <?php
@@ -128,15 +127,15 @@ mysqli_close($connection);
                         </td>
                         <input type="hidden" id="dropdowndata" name="dropdowndata">
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA Paid By</td>
                         <td width="165"><input type="text" name="fapaidby" id="fapaidby"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">FA Paid To</td>
                         <td width="165"><input type="text" name="fapaidto" id="fapaidto"></td>
                     </tr>
-                    <tr>
+                    <tr class="spaceUnder">
                         <td width="165">Relation</td>
                         <td width="165">
                             <select id="relation">

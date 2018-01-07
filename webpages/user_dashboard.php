@@ -17,6 +17,7 @@
 	<hr id=upper color=red>
 
 <div id=style>
+    <b><p>  <?php session_start(); if(isset($_SESSION['username'])) { $user = $_SESSION['username']; echo "Hello, $user";} else {die("Error: Missing user credentials");} ?> </p></b>  <br>
 <ul>
   <li><a href="details.php">Death Entry</a></li>
   <li><a href="cga_details.php">CGA</a></li>
