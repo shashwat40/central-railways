@@ -1,47 +1,48 @@
 <?php
-$connection = mysqli_connect("localhost:3306","root","","central_railways");
-$emp_name = "";
-$desig = "";
-$dept = "";
-$station = "";
 session_start();
-if(isset($_POST['getdetails'])) {
-    $_SESSION['empno'] = $_POST['empno'];
-    $emp_no = $_POST['empno'];
-    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employees WHERE emp_no = $emp_no");
-    while($row = mysqli_fetch_assoc($result)) {
-        $emp_name = $row['emp_name'];
-        $desig = $row['desig'];
-        $dept = $row['dept'];
-        $station = $row['station'];
-    }
+if(isset($_SESSION['username'])) {
+      $connection = mysqli_connect("localhost:3306", $_SESSION['username'], $_SESSION['passwd'],"central_railways");
+      $emp_name = "";
+      $desig = "";
+      $dept = "";
+      $station = "";
+      if(isset($_POST['getdetails'])) {
+            $_SESSION['empno'] = $_POST['empno'];
+            $emp_no = $_POST['empno'];
+            $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employees WHERE emp_no = '$emp_no'");
+            while($row = mysqli_fetch_assoc($result)) {
+                  $emp_name = $row['emp_name'];
+                  $desig = $row['desig'];
+                  $dept = $row['dept'];
+                  $station = $row['station'];
+            }
+      } else if(isset($_POST['submitdetails'])) {
+            $emp_no = $_POST['empno'];
+            $fa_spo_no = $_POST['faspono'];
+            $fa_spo_date = $_POST['faspodate'];
+            $fa_amt = $_POST['faamt'];
+            $dropdown_array = explode('~', $_POST['dropdowndata']);
+            $fa_paid_by = $_POST['fapaidby'];
+            $fa_paid_to = $_POST['fapaidto'];
+            $result = mysqli_query($connection, "INSERT INTO funeral_advance (emp_no, fa_spo_no, fa_spo_date, "
+                                                . "fa_amt, fa_paid_stn, fa_paid_by, fa_paid_to, relation) VALUES"
+                                                . " ('$emp_no', '$fa_spo_no', '$fa_spo_date', $fa_amt, '$dropdown_array[0]'"
+                                                . ", '$fa_paid_by', '$fa_paid_to', '$dropdown_array[1]')");
+            if(!$result) {
+                  echo "<script> alert('Sorry! Data not inserted. Error : '". mysqli_error($connection) ."); </script>";
+            } else {
+                  echo "<script> alert('Data entered successfully.'); </script>";
+                  unset($_SESSION['empno']);
+            }
+      }
+      mysqli_close($connection);
 }
-else if(isset($_POST['submitdetails'])) {
-    $emp_no = $_POST['empno'];
-    $fa_spo_no = $_POST['faspono'];
-    $fa_spo_date = $_POST['faspodate'];
-    $fa_amt = $_POST['faamt'];
-    $dropdown_array = explode('~', $_POST['dropdowndata']);
-    $fa_paid_by = $_POST['fapaidby'];
-    $fa_paid_to = $_POST['fapaidto'];
-    $result = mysqli_query($connection, "INSERT INTO funeral_advance (emp_no, fa_spo_no, fa_spo_date, "
-                                        . "fa_amt, fa_paid_stn, fa_paid_by, fa_paid_to, relation) VALUES"
-                                        . " ('$emp_no', '$fa_spo_no', '$fa_spo_date', $fa_amt, '$dropdown_array[0]'"
-                                        . ", '$fa_paid_by', '$fa_paid_to', '$dropdown_array[1]')");
-    if(!$result) {
-        echo "<script> alert('Sorry! Data not inserted. Try again.'); </script>";
-    }
-    else {
-        echo "<script> alert('Data entered successfully.');</script>";
-        unset($_SESSION['empno']);
-        session_destroy();
-    }
-}
-mysqli_close($connection);
+else
+    die("Error: Missing user credentials");
 ?>
 <html>
     <head>
-        <title>Indian Railways</title>
+        <title>Funeral Advance</title>
         <link rel="stylesheet" href="user_dashboard.css">
         <link rel="stylesheet" href="user_dashboard.css">
         <link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
@@ -57,22 +58,23 @@ mysqli_close($connection);
         </script>
     </head>
     <body>
-	<img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
-	<br><p><font align =right size=200 font face ="calibri">INDIAN RAILWAYS</font></p>
-	<hr id=lower color=red>
+	  <img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
+	  <br><p><font align =right size=200 font face ="calibri">INDIAN RAILWAYS</font></p>
+        <p><a href="<?php if($_SESSION['username'] == 'cradmin') {echo 'admin_dashboard.php';} else {echo 'user_dashboard.php';}?>" align="right">Home</a></p>
+	  <hr id=lower color=red>
         <hr id=upper color=red>
         <div id=style>
             <div id=holder>
-		<ul>
-                    <li><a href="details.php" >Details</a></li>
-                    <li><a class="active" href="funeral_advance.php" id=link>Funeral Advance</a></li>
-                    <li><a href="kkkosh.php">KKKOSH</a></li>
-                    <li><a href="distress_fund.php">Distress Fund</a></li>
-		</ul>
+		      <ul>
+                        <li><a href="details.php" >Details</a></li>
+                        <li><a class="active" href="funeral_advance.php" id=link>Funeral Advance</a></li>
+                        <li><a href="kkkosh.php">KKKOSH</a></li>
+                        <li><a href="distress_fund.php">Disstress Fund</a></li>
+		      </ul>
             </div>
-	</div>
-	<br>
-	<br>
+	  </div>
+	  <br>
+	  <br>
         <form method="post" action="funeral_advance.php">
             <fieldset>
                 <legend><h2>Funeral Advance:</h2></legend>
@@ -115,7 +117,7 @@ mysqli_close($connection);
                         <td width="165">FA Paid At Station</td>
                         <td width="165">
                             <?php
-                                $connection = mysqli_connect("localhost:3306","root","","central_railways");
+                                $connection = mysqli_connect("localhost:3306", $_SESSION['username'], $_SESSION['passwd'],"central_railways");
                                 $station_list = mysqli_query($connection, "SELECT full_name FROM station");
                                 echo '<select id="fapaidatstation">';
                                 while($row = mysqli_fetch_array($station_list)) {
@@ -156,11 +158,11 @@ mysqli_close($connection);
         </form>
         <script type="text/javascript">
             function getDropdownData() {
-                var listdata;
-                listdata = document.getElementById('fapaidatstation');
-                document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
-                listdata = document.getElementById('relation');
-                document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                  var listdata;
+                  listdata = document.getElementById('fapaidatstation');
+                  document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
+                  listdata = document.getElementById('relation');
+                  document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text + '~';
             }
         </script>
      </body>

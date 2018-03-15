@@ -29,6 +29,7 @@
         <a href="#">Search Date Wise</a>
 	  </ul>
   </li>
+  <li><a href="add_user.php">Admin</a></li>
   <li><a href="logout.php">Logout</a></li>
 </ul>
 </div>

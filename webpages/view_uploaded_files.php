@@ -14,34 +14,17 @@ if(isset($_SESSION['username'])) {
                   $desig = $row['desig'];
                   $dept = $row['dept'];
             }
-      } else if(isset($_POST['upload'])) {
-            $emp_no = $_POST['empno'];
-            $file_type = $_POST['dropdowndata'];
-            $target = "cga_files/";
-            $filesize = $_FILES['fileupload']['size'];
-            $target = $target . basename($_FILES['fileupload']['name']);
-            $file_path = "http://localhost/central_railways/webpages/" . $target;
-            if($filesize <= 25000000) {
-                  if(move_uploaded_file($_FILES['fileupload']['tmp_name'], $target)) {
-                        $result = mysqli_query($connection, "INSERT INTO files (emp_no, file_type, file_path) VALUES ('$emp_no', '$file_type', '$file_path')");
-                        if(!$result) {
-                              echo "<script> alert('Sorry! File not uploaded. Error : '". mysqli_error($connection) ."); </script>";
-                        } else {
-                              echo "<script> alert('File uploaded successfully.'); </script>";
-                              unset($_SESSION['empno']);
-                        }
-                  }
-            } else {
-                  die("File too large.");
-            }
+      } else if(isset($_POST['getfile'])) {
+            header('Content-type: application/pdf');
+            header('Content-Disposition: inline; filename="' . $_POST['dropdowndata'] . '"');
+            header('Content-Transfer-Encoding: binary');
+            readfile($_POST['dropdowndata']);
       }
-} else {
-      die("Error: Missing user credentials");
 }
 ?>
 <html>
     <head>
-        <title>File Upload</title>
+        <title>View Files</title>
         <link rel="stylesheet" href="user_dashboard.css">
 	  <link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
 	  <script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
@@ -61,15 +44,15 @@ if(isset($_SESSION['username'])) {
                 <li><a href="cga_details.php" id=link>Details</a></li>
                 <li><a href="minor_registration.php">Minor Registration</a></li>
                 <li><a href="remarks.php">Remarks</a></li>
-                <li><a class="active" href="file_upload.php">File Upload</a></li>
-                <li><a href="view_uploaded_files.php">View Files</a></li>
+                <li><a href="file_upload.php">File Upload</a></li>
+                <li><a class="active" href="view_uploaded_files.php">View Files</a></li>
             </ul>
         </div>
         <br>
         <br>
-        <form method="post" action="file_upload.php" enctype="multipart/form-data">
+        <form method="post" action="view_uploaded_files.php" enctype="multipart/form-data">
              <fieldset>
-		   	 <legend><h2>File Upload: </h2></legend>
+		   	 <legend><h2>Select a file to view </h2></legend>
 		   	 <table align="left" border="0">
 		   	      <tr class="spaceUnder">
 		   	            <td width="165">Employee No. :</td>
@@ -79,7 +62,7 @@ if(isset($_SESSION['username'])) {
 		   	            <td width="165">Name:</td>
 		   	            <td width="165"><input type="text" name="empname" id="empname" value="<?php echo $emp_name; ?>" disabled></td>
 		   	      </tr>
-		   	      <tr class="spaceUnder">
+                        <tr class="spaceUnder">
 		   	            <td width="165">Designation :</td>
 		   	            <td width="165"><input type="text" name="designation" id="designation" value="<?php echo $desig; ?>" disabled></td>
 		   	      </tr>
@@ -87,24 +70,26 @@ if(isset($_SESSION['username'])) {
 		   	            <td width="165">Department :</td>
 		   	            <td width="165"><input type="text" name="department" id="department" value="<?php echo $dept; ?>" disabled></td>
                         </tr>
-                        <tr class="spaceUnder">
-                              <td>Description :</td>
-                              <td>
-                                    <select id="description">
-                                        <option value="CGA Case File">CGA Case File</option>
-                                        <option value="Service Record">Service Record</option>
-                                        <option value="Funeral Advance">Funeral Advance</option>
-                                        <option value="KKKOSH">KKKOSH</option>
-                                        <option value="Disstress Fund">Disstress Fund</option>
-                                    </select>
-                              </td>
-                        </tr>
-                        <tr class="spaceUnder">
-				      <td width="165"><input type="file" id="fileupload" name="fileupload"></td>
-				</tr>
+                        <?php
+                        if(isset($_SESSION['username'])) {
+                              if(isset($_POST['getdetails'])) {
+                                    $result = mysqli_query($connection, "SELECT file_type, file_path FROM files WHERE emp_no = '$emp_no'");
+                                    echo "<tr class='spaceUnder'>";
+                                    echo "<td>Available files </td>";
+                                    echo "<td>";
+                                    echo "<select id='availfiles'>";
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                          echo "<option value='". $row['file_path'] . "'>". $row['file_type']. "</option>";
+                                    }
+                                    echo "</select>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                              }
+                        }
+                        ?>
 				<tr class="spaceUnder">
                               <td width="165"><input type="submit" value="Get Details" name="getdetails"></td>
-                              <td width="165"><input type="submit" name="upload" id="upload" value="Upload" onclick="getDropdownData();"></td>
+                              <td width="165"><input type="submit" name="getfile" id="getfile" value="View file" onclick="getDropdownData();"></td>
 				</tr>
                   </table>
                   <input name="dropdowndata" id="dropdowndata" type="hidden">
@@ -113,8 +98,8 @@ if(isset($_SESSION['username'])) {
       <script>
             function getDropdownData() {
                   var listdata;
-                  listdata = document.getElementById('description');
-                  document.getElementById('dropdowndata').value = document.getElementById('dropdowndata').value + listdata.options[listdata.selectedIndex].text;
+                  listdata = document.getElementById('availfiles');
+                  document.getElementById('dropdowndata').value = listdata.options[listdata.selectedIndex].value;
             }
       </script>
     </body>

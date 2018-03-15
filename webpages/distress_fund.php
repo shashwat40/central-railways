@@ -1,47 +1,48 @@
 <?php
-$connection = mysqli_connect("localhost:3306","root","","central_railways");
-$emp_name = "";
-$desig = "";
-$dept = "";
-$station = "";
 session_start();
-if(isset($_POST['getdetails'])) {
-    $_SESSION['empno'] = $_POST['empno'];
-    $emp_no = $_POST['empno'];
-    $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employees WHERE emp_no = $emp_no");
-    while($row = mysqli_fetch_assoc($result)) {
-        $emp_name = $row['emp_name'];
-        $desig = $row['desig'];
-        $dept = $row['dept'];
-        $station = $row['station'];
-    }
+if(isset($_SESSION['username'])) {
+      $connection = mysqli_connect("localhost:3306", $_SESSION['username'], $_SESSION['passwd'],"central_railways");
+      $emp_name = "";
+      $desig = "";
+      $dept = "";
+      $station = "";
+      if(isset($_POST['getdetails'])) {
+            $_SESSION['empno'] = $_POST['empno'];
+            $emp_no = $_POST['empno'];
+            $result = mysqli_query($connection, "SELECT emp_name, desig, dept, station FROM employees WHERE emp_no = '$emp_no'");
+            while($row = mysqli_fetch_assoc($result)) {
+                  $emp_name = $row['emp_name'];
+                  $desig = $row['desig'];
+                  $dept = $row['dept'];
+                  $station = $row['station'];
+            }
+      } else if(isset($_POST['submitdetails'])) {
+            $emp_no = $_POST['empno'];
+            $cheque_no = $_POST['dfchequeno'];
+            $cheque_date = $_POST['chequedate'];
+            $amount = $_POST['dfamount'];
+            $paid_by = $_POST['dfpaidby'];
+            $paid_to = $_POST['dfpaidto'];
+            $relation = $_POST['dropdowndata'];
+            $result = mysqli_query($connection, "INSERT INTO distress_fund (emp_no, dist_fund_cheq_no, dist_fund_cheq_date, "
+                                                . "dist_fund_amt, dist_fund_paid_by, dist_fund_paid_to, relation) VALUES ("
+                                                . "'$emp_no', '$cheque_no', '$cheque_date', $amount, '$paid_by', '$paid_to', "
+                                                . "'$relation')");
+            if(!$result) {
+                  echo "<script> alert('Sorry! Data not inserted. Error : '". mysqli_error($connection) ."); </script>";
+            } else {
+                  echo "<script> alert('Data entered successfully.'); </script>";
+                  unset($_SESSION['empno']);
+            }
+      }
+      mysqli_close($connection);
+} else {
+      die("Error: Missing user credentials");
 }
-else if(isset($_POST['submitdetails'])) {
-    $emp_no = $_POST['empno'];
-    $cheque_no = $_POST['dfchequeno'];
-    $cheque_date = $_POST['chequedate'];
-    $amount = $_POST['dfamount'];
-    $paid_by = $_POST['dfpaidby'];
-    $paid_to = $_POST['dfpaidto'];
-    $relation = $_POST['dropdowndata'];
-    $result = mysqli_query($connection, "INSERT INTO distress_fund (emp_no, dist_fund_cheq_no, dist_fund_cheq_date, "
-                                        . "dist_fund_amt, dist_fund_paid_by, dist_fund_paid_to, relation) VALUES ("
-                                        . "'$emp_no', '$cheque_no', '$cheque_date', $amount, '$paid_by', '$paid_to', "
-                                        . "'$relation')");
-    if(!$result) {
-        echo "<script> alert('Sorry! Data not inserted. Try again.'); </script>";
-    }
-    else {
-        echo "<script> alert('Data entered successfully.'); </script>";
-        unset($_SESSION['empno']);
-        session_destroy();
-    }
-}
-mysqli_close($connection);
 ?>
 <html>
     <head>
-        <title>Indian Railways</title>
+        <title>Disstress Fund</title>
         <link rel="stylesheet" href="user_dashboard.css">
         <link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
         <script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
@@ -58,6 +59,7 @@ mysqli_close($connection);
     <body>
 	<img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
 	<br><p><font align =right size=200 font face ="calibri">INDIAN RAILWAYS</font></p>
+      <p><a href="<?php if($_SESSION['username'] == 'cradmin') {echo 'admin_dashboard.php';} else {echo 'user_dashboard.php';}?>" align="right">Home</a></p>
 	<hr id=lower color=red>
 	<hr id=upper color=red>
         <div id=style>
@@ -65,7 +67,7 @@ mysqli_close($connection);
                 <li><a href="details.php">Details</a></li>
                 <li><a href="funeral_advance.php">Funeral Advance</a></li>
                 <li><a href="kkkosh.php">KKKOSH</a></li>
-                <li><a class="active" href="distress_fund.php" id=link>Distress Fund</a></li>
+                <li><a class="active" href="distress_fund.php" id=link>Disstress Fund</a></li>
             </ul>
         </div>
 	<br><br>
@@ -131,15 +133,15 @@ mysqli_close($connection);
                         </td>
                     </tr>
                 </table>
-            <input type="submit" value="Get Details" name="getdetails">
-            <input type="submit" value="Submit" name="submitdetails" onclick="getDropdownData();">
+                <input type="submit" value="Get Details" name="getdetails">
+                <input type="submit" value="Submit" name="submitdetails" onclick="getDropdownData();">
             </fieldset>
         </form>
         <script>
             function getDropdownData() {
-                var listdata;
-                listdata = document.getElementById('relation');
-                document.getElementById('dropdowndata').value = listdata.options[listdata.selectedIndex].text;
+                  var listdata;
+                  listdata = document.getElementById('relation');
+                  document.getElementById('dropdowndata').value = listdata.options[listdata.selectedIndex].text;
             }
         </script>
     </body>
