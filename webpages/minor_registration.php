@@ -52,6 +52,12 @@ if(isset($_SESSION['username'])) {
         <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
         <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
         <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#birthdate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
+                $("#appwidow").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
+            });
+        </script>
 </head>
     <body>
         <img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
@@ -134,15 +140,15 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Application from widow/widower for Minor Registration received date :</td>
-                            <td width="165"><input type="date" name="appwidow" id="appwidow"></td>
+                            <td width="165"><input type="text" name="appwidow" id="appwidow"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Name of Minor:</td>
-                            <td width="165"><input type="text" name="nameofminor" id="nameofminor"></td>
+                            <td width="165"><input type="text" pattern="[A-Z a-z]{1,50}" title="Name cannot be longer than 50 characters" name="nameofminor" id="nameofminor"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Date of Birth of Minor :</td>
-                            <td width="165"><input type="date" name="birthdate" id="birthdate"></td>
+                            <td width="165"><input type="text" name="birthdate" id="birthdate"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Gender: </td>
@@ -167,7 +173,7 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Adhar Card Number of candidate :</td>
-                            <td width="165"><input type="text" name="aadhar" id="aadhar"></td>
+                            <td width="165"><input type="text" pattern="[0-9]{12}" title="AADHAR should be numeric and should be 12 digits long" name="aadhar" id="aadhar"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Minor Registration Number :</td>

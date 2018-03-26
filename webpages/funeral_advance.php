@@ -102,19 +102,19 @@ else
                 </table>
                 <table align="center" border="0">
                     <tr class="spaceUnder">
-                        <td width="165">FA SPO No(6 digit)</td>
-                        <td width="165"><input type="text" name="faspono" id="faspono"></td>
+                        <td width="165">FA SPO No:</td>
+                        <td width="165"><input type="text" pattern="[0-9]{6}" title="FA SPO No cannot be longer than 6 digits" name="faspono" id="faspono"></td>
                     </tr>
                     <tr class="spaceUnder">
                         <td width="165">FA SPO Date:</td>
                         <td width="165"><input type="text" name="faspodate" id="faspodate"></td>
                     </tr>
                     <tr class="spaceUnder">
-                        <td width="165">FA Amount</td>
+                        <td width="165">FA Amount:</td>
                         <td width="165"><input type="text" name="faamt" id="faamt"></td>
                     </tr>
                     <tr class="spaceUnder">
-                        <td width="165">FA Paid At Station</td>
+                        <td width="165">FA Paid At Station:</td>
                         <td width="165">
                             <?php
                                 $connection = mysqli_connect("localhost:3306", $_SESSION['username'], $_SESSION['passwd'],"central_railways");
@@ -130,12 +130,12 @@ else
                         <input type="hidden" id="dropdowndata" name="dropdowndata">
                     </tr>
                     <tr class="spaceUnder">
-                        <td width="165">FA Paid By</td>
-                        <td width="165"><input type="text" name="fapaidby" id="fapaidby"></td>
+                        <td width="165">FA Paid By:</td>
+                        <td width="165"><input type="text" pattern="[A-Z a-z]{1,50}" title="Name cannot be longer than 50 characters" name="fapaidby" id="fapaidby"></td>
                     </tr>
                     <tr class="spaceUnder">
-                        <td width="165">FA Paid To</td>
-                        <td width="165"><input type="text" name="fapaidto" id="fapaidto"></td>
+                        <td width="165">FA Paid To:</td>
+                        <td width="165"><input type="text" pattern="[A-Z a-z]{1,50}" title="Name cannot be longer than 50 characters" name="fapaidto" id="fapaidto"></td>
                     </tr>
                     <tr class="spaceUnder">
                         <td width="165">Relation</td>

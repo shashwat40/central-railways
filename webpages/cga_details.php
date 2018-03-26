@@ -59,7 +59,12 @@ if(isset($_SESSION['username'])) {
         <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
         <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
         <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
-</head>
+	  <script>
+            $(document).ready(function() {
+                $("#casedate").datepicker({ dateFormat : 'yy-mm-dd', changeYear: true, changeMonth: true});
+            });
+        </script>
+    </head>
     <body>
         <img align= left height= 120px src="http://localhost/central_railways/images/logo.png"></img>
         <br><p><font align =right size=200 font face ="calibri">INDIAN RAILWAYS</font></p>
@@ -158,11 +163,11 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">PAN of Candidate :</td>
-                            <td width="165"><input type="text" name="pan" id="pan"></td>
+                            <td width="165"><input type="text" pattern="[A-Z 0-9]{10}" title="PAN should be alphanumeric and should not be longer than 10 characters" name="pan" id="pan"></td>
 				</tr>
                         <tr class="spaceUnder">
                             <td width="165">Aadhaar Card Number of candidate :</td>
-                            <td width="165"><input type="text" name="aadhar" id="aadhar"></td>
+                            <td width="165"><input type="text" pattern="[0-9]{12}" title="AADHAR should be numeric and should be 12 digits long" name="aadhar" id="aadhar"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Educational qualification :</td>
@@ -185,7 +190,7 @@ if(isset($_SESSION['username'])) {
                         </tr>
 				<tr class="spaceUnder">
                             <td width="165">CGA Case submitted by Welfare Inspector on :</td>
-                            <td width="165"><input type="date" name="casedate" id="casedate"></td>
+                            <td width="165"><input type="text" name="casedate" id="casedate"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Pending with :</td>
@@ -199,6 +204,7 @@ if(isset($_SESSION['username'])) {
                                     <option value="APO">APO</option>
                                     <option value="DPO">DPO</option>
                                     <option value="Sr.DPO">Sr.DPO</option>
+						<option value="HQ">HQ</option>
                                 </select>
                             </td>
                         </tr>

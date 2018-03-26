@@ -36,8 +36,9 @@ if(isset($_SESSION['username']) && $_SESSION['username'] == 'cradmin') {
         <hr id=upper color=red>
         <div id=style>
             <ul>
-                <li><a  href="add_user.php" id=link>Add User</a></li>
-                <li><a class="active" href="delete_user.php">Delete User</a>
+                <li><a href="add_user.php" id=link>Add User</a></li>
+                <li><a class="active" href="delete_user.php">Delete User</a></li>
+                <li><a href="employee_data_entry.php" id=link>Data Entry</a></li>
             </ul>
         </div>
         <br>

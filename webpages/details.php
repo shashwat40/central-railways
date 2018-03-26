@@ -154,7 +154,7 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Date of Death/Medically Unfit/Missing</td>
-                            <td width="165"><input type="date" name="deathdate" id="deathdate"></td>
+                            <td width="165"><input type="text" name="deathdate" id="deathdate"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Welfare Inspector Name</td>
@@ -204,11 +204,11 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Mobile No</td>
-                            <td width="165"><input type="text" name="mobile" id="mobile"></td>
+                            <td width="165"><input type="text" pattern="[0-9]{10}" title="Mobile number should be numeric and should not be longer than 10 digits" name="mobile" id="mobile"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">Contact Person Name</td>
-                            <td width="165"><input type="text" name="cpn" id="cpn"></td>
+                            <td width="165"><input type="text" pattern="[A-z a-z]{1,50}" title="Name cannot be longer than 50 characters" name="cpn" id="cpn"></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td width="165">SR top page available</td>
@@ -296,7 +296,7 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td>Name</td>
-                            <td><input type="text" id="relativename" name="relativename" disabled></td>
+                            <td><input type="text" pattern="[A-Z a-z]{1,50}" title="Name cannot be longer than 50 characters" id="relativename" name="relativename" disabled></td>
                         </tr>
                         <tr class="spaceUnder">
                             <td>CGA application received</td>
@@ -309,7 +309,7 @@ if(isset($_SESSION['username'])) {
                         </tr>
                         <tr class="spaceUnder">
                             <td>Application received on</td>
-                            <td><input type="date" id="appdate" name="appdate" disabled></td>
+                            <td><input type="text" id="appdate" name="appdate" disabled></td>
                         </tr>
                     </table>
                 <input type="submit" value="Get Details" name="getdetails">

@@ -99,7 +99,7 @@ if(isset($_SESSION['username'])) {
                 <table align="center" border="0">
                     <tr class="spaceUnder">
                         <td width="165">Distress Fund Cheque No:</td>
-                        <td width="165"><input type="text" name="dfchequeno" id="dfchequeno"></td>
+                        <td width="165"><input type="text" pattern="(0|1|2|3)[0-9]{5}" title="Cheque number should begin with 0, 1, 2 or 3 and should contain 6 digits" name="dfchequeno" id="dfchequeno"></td>
                     </tr>
                     <tr class="spaceUnder">
                         <td width="165">Distress Fund Cheque Date :</td>

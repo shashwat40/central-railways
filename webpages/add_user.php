@@ -64,7 +64,8 @@ else
         <div id=style>
             <ul>
                 <li><a class="active" href="add_user.php" id=link>Add User</a></li>
-                <li><a href="delete_user.php">Delete User</a>
+                <li><a href="delete_user.php">Delete User</a></li>
+                <li><a href="employee_data_entry.php">Data Entry</a></li>
             </ul>
         </div>
         <br>

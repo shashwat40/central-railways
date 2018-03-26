@@ -1,0 +1,63 @@
+<?php
+session_start();
+if(isset($_SESSION['username'])) {
+      $connection = mysqli_connect("localhost:3306", $_SESSION['username'], $_SESSION['passwd'], "central_railways");
+      if(isset($_POST['subemp'])) {
+            $emp_no = $_POST['empno'];
+            $cga_list = mysqli_query($connection, "SELECT * FROM minor_registration WHERE emp_no = '$emp_no'");
+      } else if(isset($_POST['subdate'])) {
+            $date = $_POST['searchdate'];
+            $cga_list = mysqli_query($connection, "SELECT * FROM minor_registration WHERE DATE_FORMAT(record_date, '%Y-%m-%d') = DATE_FORMAT('$date', '%Y-%m-%d')");
+      } else {
+            $cga_list = mysqli_query($connection, "SELECT * FROM minor_registration");
+      }
+      while($row = mysqli_fetch_array($cga_list)) {
+            echo "<br><br/><br></br>";
+            echo "<button class='accordion'>" . $row['emp_no'] . "</button>";
+            echo "<div class='panel'>
+                  <p>
+                  <br> Application from widow/widower for Minor Registration received. :              " . $row['app_widow_rcvd'] . "
+                  <br> Application from widow/widower for Minor Registration received date :          " . $row['app_widow_rcvd_date'] . "
+                  <br> Name of Minor :                                                                " . $row['name_of_minor'] . "
+                  <br> Date of Birth of Mino :                                                        " . $row['dob_of_minor'] . "
+                  <br> Gender :                                                                       " . $row['gender'] . "
+                  <br> Relation of Minor with late/Ex/Missing employee :                              " . $row['minor_relation'] . "
+                  <br> Adhar Card Number of candidate :                                               " . $row['candidate_aadhar'] . "
+                  <br> Minor Registration Number :                                                    " . $row['reg_no'] . "
+                  </p>
+                  </div>";
+      }
+      mysqli_close($connection);
+} else {
+      die("Error: Missing user credentials");
+}
+?>
+<html>
+      <head>
+            <title>View Details</title>
+            <link rel="stylesheet" href="user_dashboard.css">
+            <link rel="stylesheet" href="http://localhost/central_railways/bootstrap/css/bootstrap.min.css">
+            <script src="http://localhost/central_railways/bootstrap/js/jquery-3.2.1.js"></script>
+            <script src="http://localhost/central_railways/bootstrap/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="http://localhost/central_railways/plugins/jquery/jquery-ui.css">
+            <script src="http://localhost/central_railways/plugins/jquery/external/jquery/jquery.js"></script>
+            <script src="http://localhost/central_railways/plugins/jquery/jquery-ui.min.js"></script>
+      </head>
+      <body>
+            <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+            for (i = 0; i < acc.length; i++) {
+                  acc[i].addEventListener("click", function() {
+                        this.classList.toggle("active1");
+                        var panel = this.nextElementSibling;
+                        if (panel.style.maxHeight) {
+                              panel.style.maxHeight = null;
+                        } else {
+                              panel.style.maxHeight = panel.scrollHeight + "px";
+                        }
+                  });
+           }
+           </script>
+     </body>
+</html>

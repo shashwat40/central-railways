@@ -96,7 +96,7 @@ if(isset($_SESSION['username'])) {
                 <table align="center" border="0">
                     <tr class="spaceUnder">
                         <td width="165">KKKOSH Cheque No:</td>
-                        <td width="165"><input type="text" name="kkkoshchequeno" id="kkkoshchequeno"></td>
+                        <td width="165"><input type="text" pattern="(0|1|2|3)[0-9]{5}" title="Cheque number should begin with 0, 1, 2 or 3 and should contain 6 digits" name="kkkoshchequeno" id="kkkoshchequeno"></td>
                     </tr>
                     <tr class="spaceUnder">
                         <td width="165">KKKOSH Cheque Date :</td>
@@ -108,7 +108,7 @@ if(isset($_SESSION['username'])) {
                     </tr>
                     <tr class="spaceUnder">
                         <td width="165">KKKOSH Paid By :</td>
-                        <td width="165"><input type="text" name="kkkoshpaidby" id="kkkoshpaidby">
+                        <td width="165"><input type="text" pattern="[A-Z a-z]{1,50}" title="Name should not be longer than 50 characters" name="kkkoshpaidby" id="kkkoshpaidby">
                     </tr>
                 </table>
                 <br>
